@@ -4,6 +4,8 @@ import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.filechooser.FileSystemView;
 import java.awt.*;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.StringSelection;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -59,11 +61,15 @@ public final class ZipEdit extends JFrame implements ActionListener{
         JMenuItem menuitem_open = new JMenuItem("Open");
         JMenuItem menuitem_save = new JMenuItem("Save");
         JMenuItem menuitem_quit = new JMenuItem("Quit");
+        JMenuItem menuitem_copy = new JMenuItem("Copy");
+        JMenuItem menuitem_paste = new JMenuItem("Paste");
 
         menuitem_new.addActionListener(this);
         menuitem_open.addActionListener(this);
         menuitem_save.addActionListener(this);
         menuitem_quit.addActionListener(this);
+        menuitem_copy.addActionListener(this);
+        menuitem_paste.addActionListener(this);
 
         menu_main.add(menu_file);
 
@@ -71,6 +77,8 @@ public final class ZipEdit extends JFrame implements ActionListener{
         menu_file.add(menuitem_open);
         menu_file.add(menuitem_save);
         menu_file.add(menuitem_quit);
+        menu_file.add(menuitem_copy);
+        menu_file.add(menuitem_paste);
 
         frame.setJMenuBar(menu_main);
 
@@ -130,6 +138,11 @@ public final class ZipEdit extends JFrame implements ActionListener{
             area.setText("");
         } else if (ae.equals("Quit")) {
             System.exit(0);
+        } else if (ae.equals("Copy")) {
+            Clipboard clip = Toolkit.getDefaultToolkit().getSystemClipboard();
+            clip.setContents(new StringSelection(area.getSelectedText()), new StringSelection(area.getSelectedText()));
+        } else if (ae.equals("Paste")) {
+            area.paste();
         }
     }
 }
