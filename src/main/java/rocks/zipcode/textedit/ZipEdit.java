@@ -86,7 +86,7 @@ public final class ZipEdit extends JFrame implements ActionListener{
         String ingest = "";
         JFileChooser jfc = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
         jfc.setCurrentDirectory(Paths.get(".").toFile());
-        jfc.setSelectedFile(new File("untitled.txt"));
+        jfc.setSelectedFile(new File("untitled.txt")); //took 22 minutes
         jfc.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
 
 
