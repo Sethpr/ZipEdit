@@ -11,6 +11,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Paths;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -84,8 +85,10 @@ public final class ZipEdit extends JFrame implements ActionListener{
     public void actionPerformed(ActionEvent e) {
         String ingest = "";
         JFileChooser jfc = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
-        jfc.setDialogTitle("Choose destination.");
+        jfc.setCurrentDirectory(Paths.get(".").toFile());
+        jfc.setSelectedFile(new File("untitled.txt"));
         jfc.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
+
 
         String ae = e.getActionCommand();
         int returnValue;
@@ -100,7 +103,7 @@ public final class ZipEdit extends JFrame implements ActionListener{
                     Scanner scan = new Scanner(read);
                     while(scan.hasNextLine()){
                         String line = scan.nextLine() + "\n";
-                        ingest = ingest + line;
+                        ingest = ingest + line; // come on Kris, use a stringBuilder smh you want all these floating around in the literal area
                     }
                     area.setText(ingest);
                 }
