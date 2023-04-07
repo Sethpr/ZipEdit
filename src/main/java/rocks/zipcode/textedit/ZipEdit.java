@@ -22,6 +22,7 @@ public final class ZipEdit extends JFrame implements ActionListener{
     private JTextArea area;
     private JFrame frame;
     private String filename = "untitled";
+    JMenuItem menuitem_mode;
     public ZipEdit() {  }
 
 
@@ -63,6 +64,8 @@ public final class ZipEdit extends JFrame implements ActionListener{
         JMenuItem menuitem_open = new JMenuItem("Open");
         JMenuItem menuitem_save = new JMenuItem("Save");
         JMenuItem menuitem_quit = new JMenuItem("Quit");
+        menuitem_mode = new JMenuItem("Dark");
+
         JMenuItem menuitem_copy = new JMenuItem("Copy");
         JMenuItem menuitem_paste = new JMenuItem("Paste");
         JMenuItem menuitem_find = new JMenuItem("Find");
@@ -71,6 +74,7 @@ public final class ZipEdit extends JFrame implements ActionListener{
         menuitem_open.addActionListener(this);
         menuitem_save.addActionListener(this);
         menuitem_quit.addActionListener(this);
+        menuitem_mode.addActionListener(this);
         menuitem_copy.addActionListener(this);
         menuitem_paste.addActionListener(this);
         menuitem_find.addActionListener(this);
@@ -82,6 +86,8 @@ public final class ZipEdit extends JFrame implements ActionListener{
         menu_file.add(menuitem_open);
         menu_file.add(menuitem_save);
         menu_file.add(menuitem_quit);
+        menu_file.add(menuitem_mode);
+
         menu_edit.add(menuitem_copy);
         menu_edit.add(menuitem_paste);
         menu_edit.add(menuitem_find);
@@ -179,6 +185,16 @@ public final class ZipEdit extends JFrame implements ActionListener{
             find.add(next);
 
             find.setVisible(true);
+        } else if(ae.equals("Dark")){
+            area.setBackground(Color.BLACK);
+            area.setForeground(Color.WHITE);
+            area.setCaretColor(Color.WHITE);
+            menuitem_mode.setText("Light");
+        } else if(ae.equals("Light")){
+            area.setBackground(Color.WHITE);
+            area.setForeground(Color.BLACK);
+            area.setCaretColor(Color.BLACK);
+            menuitem_mode.setText("Dark");
         }
     }
 }
