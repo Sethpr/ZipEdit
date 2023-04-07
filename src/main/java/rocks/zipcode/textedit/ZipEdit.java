@@ -24,6 +24,7 @@ public final class ZipEdit extends JFrame implements ActionListener{
     private String filename = "untitled";
     public ZipEdit() {  }
 
+
     public static void main(String[] args) {
         ZipEdit runner = new ZipEdit();
         runner.run();
@@ -56,6 +57,7 @@ public final class ZipEdit extends JFrame implements ActionListener{
         JMenuBar menu_main = new JMenuBar();
 
         JMenu menu_file = new JMenu("File");
+        JMenu menu_edit = new JMenu("Edit");
 
         JMenuItem menuitem_new = new JMenuItem("New");
         JMenuItem menuitem_open = new JMenuItem("Open");
@@ -63,6 +65,7 @@ public final class ZipEdit extends JFrame implements ActionListener{
         JMenuItem menuitem_quit = new JMenuItem("Quit");
         JMenuItem menuitem_copy = new JMenuItem("Copy");
         JMenuItem menuitem_paste = new JMenuItem("Paste");
+        JMenuItem menuitem_find = new JMenuItem("Find");
 
         menuitem_new.addActionListener(this);
         menuitem_open.addActionListener(this);
@@ -70,15 +73,18 @@ public final class ZipEdit extends JFrame implements ActionListener{
         menuitem_quit.addActionListener(this);
         menuitem_copy.addActionListener(this);
         menuitem_paste.addActionListener(this);
+        menuitem_find.addActionListener(this);
 
         menu_main.add(menu_file);
+        menu_main.add(menu_edit);
 
         menu_file.add(menuitem_new);
         menu_file.add(menuitem_open);
         menu_file.add(menuitem_save);
         menu_file.add(menuitem_quit);
-        menu_file.add(menuitem_copy);
-        menu_file.add(menuitem_paste);
+        menu_edit.add(menuitem_copy);
+        menu_edit.add(menuitem_paste);
+        menu_edit.add(menuitem_find);
 
         frame.setJMenuBar(menu_main);
 
@@ -139,10 +145,40 @@ public final class ZipEdit extends JFrame implements ActionListener{
         } else if (ae.equals("Quit")) {
             System.exit(0);
         } else if (ae.equals("Copy")) {
-            Clipboard clip = Toolkit.getDefaultToolkit().getSystemClipboard();
-            clip.setContents(new StringSelection(area.getSelectedText()), new StringSelection(area.getSelectedText()));
+            area.copy(); //lol if I could read I would have done this the first time
         } else if (ae.equals("Paste")) {
             area.paste();
+        } else if (ae.equals("Find")){
+            JFrame find = new JFrame();
+            JTextArea inField = new JTextArea();
+            JButton next = new JButton("Next");
+
+            find.setLayout(new FlowLayout());
+
+            find.setSize(300, 100);
+            inField.setSize(250, 50);
+            area.setCaretPosition(0);
+
+            next.addActionListener((ActionEvent a) -> {
+                String target = inField.getText();
+                if(target.length() == 0){
+                    return;
+                }
+                String text = area.getText();
+                for (int i = area.getCaretPosition(); i < text.length()-target.length()+1; i++) {
+                    if(text.startsWith(target, i)){
+                        area.setCaretPosition(i);
+                        area.setSelectionStart(i);
+                        area.setSelectionEnd(i+target.length());
+                        break;
+                    }
+                }
+            });
+
+            find.add(inField);
+            find.add(next);
+
+            find.setVisible(true);
         }
     }
 }
